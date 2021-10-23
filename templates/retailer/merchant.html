@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.0.2/tailwind.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cash/8.1.0/cash.min.js"></script>
+    <script src="merchant.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div class="top-bar">
+        <input type="text" name="new-item-name" id="new-item-name"  value="Placeholder">
+        <input type="number" name="new-item-q" id="new-item-q"  max="99" min="1" value="1">
+        <input type="number" name="new-item-price" id="new-item-price"  max="10000.0" min="0.0" step = "0.01" value="10.00">
+        <button class="add">
+            Add item
+        </button>
+    </div>
+    <div class="item-list">
+        <!-- <div class="item-1">
+            <input type="text" name="item-name" id="item-name"  value="Placeholder">
+            <input type="number" name="item-q" id="item-q"  max="99" min="1" value="1">
+            <input type="number" name="item-price" id="item-price"  max="10000.0" min="0.0" step = "0.01" value="10.00">
+            <button class="remove-1">
+                Add item
+            </button>
+        </div> -->
+    </div>
+    <button type="submit" class="pay">Pay</button>
+</body>
+</html>
