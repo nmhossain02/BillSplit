@@ -1,38 +1,49 @@
-//method that gets session ID from user.html and passes it to session.html
-function getSessionID() {
-    let sessionID = document.getElementById("search-bar").value
-    //pass the session id to session.html
-}
-
-
-//method that displays purchased items => write a for loop that iterates over the list 
-//and renders it onto the webpage as buttons, along with an option to select and deselect
-function displayItems(items) {
-
-    Vue.component('display-items', {
-
-        data: function() {
-            for (let i = 0; i < items.length; i++) {
-                var _name = JSON.stringify(items[i].name)
-                var _q = JSON.stringify(items[i].q)
-                var _price = JSON.stringify(items[i].price)
-                //access items.name, items.q, items.price
-                return {
-                    name: _name,
-                    q: _q,
-                    price: _price,
-                    color: red
-                }
-            }
-        },
-
-        template: `
-            <div>
-                <button style="background-color:{{color}}" v-on:click ="color = green">  {{ name }}, x{{q}}, {{price}} </button>
-            </div>
-        `
+$(() => {
+    var socket;
+    socket = io.connect("https://" + document.domain + ':' + location.port + "/user")
+    
+    //passes itemsClone as pro
+    socket.on('connect', function() {
+        socket.emit('join', {});
+        items = item
+    });
+        
+    //passes ownerIndex, newOwner as prop
+    socket.on('update values', (items) => {
+        items = items
+    })
+                      
+    let personObj = ["Alex Henly", "red"];
+    let items = {}
+    $("#connect").on("click", () => {
+        // display items
+        let root = $("#display-purchased-items")
+        items.forEach((item, index) => {
+            root.append(
+                `<div class="item">
+                    <button class="item-button" style="background-color: ${item.color}">
+                    ${item.name}, x${item.quantity}, ${item.price}
+                    </button>
+                </div>`
+            )
+            $(".item-button").on("click", () => {
+                if (typeof item.color === "undefined" ||
+                    item.color === "white") item.color = "green"
+                else if (item.color === "green") item.color = "white"
+            })
+        })
     })
 
-    new Vue({ el: '#display-purchased-items' })
+    AddEachItem = (name, price, owner ) => {
+        $("display-purchased-list").append(
+            //someone write the front end 
+        )
 
-}
+    }
+
+})
+
+// join session
+// retrieve current data (data = item array)
+// click on an item => update data => send updated data
+// retrieve and edit until consensus is reached

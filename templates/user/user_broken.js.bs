@@ -1,0 +1,80 @@
+//method that gets session ID from user.html and passes it to session.html
+function getSessionID() {
+    let sessionID = document.getElementById("search-bar").value
+    //pass the session id to session.html
+    // process:
+    // - send request to backend with session ID
+    // - bind to socket (???)
+    // - show items
+    items = [
+        {
+            "name": "Apples",
+            "price": "2.50",
+            "quantity": "3",
+            // "claim": "none" // self, other, none
+        },
+        {
+            "name": "Bananas",
+            "price": "3.50",
+            "quantity": "1"
+        },
+        {
+            "name": "Pear",
+            "price": "3.10",
+            "quantity": "5"
+        }
+    ]
+    // skipping to show items:
+    displayItems(items)
+}
+
+
+//method that displays purchased items => write a for loop that iterates over the list 
+//and renders it onto the webpage as buttons, along with an option to select and deselect
+function displayItems(items) {
+    Vue.component('display-items', {
+        data: function() {
+            items_array = []
+            for (let i = 0; i < items.length; i++) {
+                var _name = JSON.stringify(items[i].name)
+                var _q = JSON.stringify(items[i].quantity)
+                var _price = JSON.stringify(items[i].price)
+                var _claim = JSON.stringify(items[i].claim)
+                items_array.push({
+                    name: _name,
+                    quantity: _q,
+                    price: _price,
+                    claim:"none",
+                    index: i
+                })
+            }
+            return {
+                items: items_array
+            }
+        },
+        methods: {
+            toggle: function(index) {
+                if (typeof items[index].claim === "undefined" ||
+                    items[index].claim === "none") items[index].claim = "self"
+                else if (items[index].claim === "self") items[index].claim = "none"
+                changeColor(index)
+            },
+            changeColor: function(index) {
+                if (items[index].claim === "none") return "gray"
+                if (items[index].claim === "self") return "black"
+                if (items[index].claim === "other") return "orange"
+            }
+        },
+        template: `
+            <div className="container">
+                <div v-for="item in items">
+                    <button v-on:click="toggle(item.index)"">
+                    {{ item.name }}, x{{item.quantity}}, {{item.price}}
+                    </button>
+                </div>
+            </div>`
+    })
+
+    new Vue({ el: '#display-purchased-items' })
+
+}
