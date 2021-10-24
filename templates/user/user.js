@@ -1,49 +1,65 @@
-$(() => {
-    var socket;
-    socket = io.connect("https://" + document.domain + ':' + location.port + "/user")
-    
-    //passes itemsClone as pro
-    socket.on('connect', function() {
-        socket.emit('join', {});
-        items = item
-    });
-        
-    //passes ownerIndex, newOwner as prop
-    socket.on('update values', (items) => {
-        items = items
-    })
-                      
-    let personObj = ["Alex Henly", "red"];
-    let items = {}
-    $("#connect").on("click", () => {
-        // display items
-        let root = $("#display-purchased-items")
-        items.forEach((item, index) => {
-            root.append(
-                `<div class="item">
-                    <button class="item-button" style="background-color: ${item.color}">
-                    ${item.name}, x${item.quantity}, ${item.price}
-                    </button>
-                </div>`
-            )
-            $(".item-button").on("click", () => {
-                if (typeof item.color === "undefined" ||
-                    item.color === "white") item.color = "green"
-                else if (item.color === "green") item.color = "white"
-            })
-        })
-    })
-
-    AddEachItem = (name, price, owner ) => {
-        $("display-purchased-list").append(
-            //someone write the front end 
-        )
-
-    }
-
-})
-
 // join session
 // retrieve current data (data = item array)
 // click on an item => update data => send updated data
 // retrieve and edit until consensus is reached
+
+let items = [];
+
+let thisOwner = {
+    index: -1,
+    name: "",
+    color: "gray"
+}
+
+const defaultOwner = {
+    index: -1,
+    name: "",
+    color: "gray"
+}
+
+$(() => {
+    let roomId;
+    let socket;
+    $("#connect").click(() => {
+        roomId = $("#search-bar").val()
+    })
+    let url = "https://" + document.domain + ':' + location.port
+    socket = io.connect(url)
+    console.log(items)
+})
+
+SendData = () => {
+    socket.emit("update values", items)
+}
+
+let first = true;
+RetrieveData = () => {
+    socket.on("update values", (items) => {items = items})
+    $("#display-purchased-items").empty()
+    items.forEach(item => {
+        CreateItem(item)
+    })
+}
+
+CreateItems = ({ index, name, price, quantity, owner }) => {
+    $("#display-purchased-items").append(`
+        <div class="item-${item.index}">
+            <button onclick="UpdateItem(${item.index})" class="item-button" style="background-color: ${item.owner.color}">
+                ${item.name}, x${item.quantity}, ${item.price}, ${item.owner.name}
+            </button>
+        </div>
+    `);
+}
+
+UpdateItem = (index) => {
+    let item = items.filter(_item => _item.index === index)
+    if (item.owner == defaultOwner) item.owner = thisOwner
+    else if (item.owner == thisOwner) item.owner = defaultOwner
+    SendData()
+}
+
+{/* <div className="item">
+    
+</div> */}
+
+// update element

@@ -57,7 +57,8 @@ def getItems():
 
 @app.route('/')
 def index2():
-    return render_template('user/user.html')
+    start_transaction()
+    #return render_template('user.html')
 
 @app.route('/start-transaction', methods=['GET', 'POST'])
 def start_transaction():
