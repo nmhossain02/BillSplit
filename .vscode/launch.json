@@ -17,6 +17,22 @@
             "request": "attach",
             "address": "localhost",
             "port": 55555
+        },
+        {
+            "name": "Python: Flask",
+            "type": "python",
+            "request": "launch",
+            "module": "flask",
+            "env": {
+                "FLASK_APP": "app2.py",
+                "FLASK_ENV": "development",
+                "FLASK_DEBUG": "0"
+            },
+            "args": [
+                "run",
+                "--no-debugger"
+            ],
+            "jinja": true
         }
     ]
 }

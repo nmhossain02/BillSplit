@@ -2,8 +2,8 @@
 // retrieve current data (data = item array)
 // click on an item => update data => send updated data
 // retrieve and edit until consensus is reached
-
 let items = [];
+let id = ''
 
 let thisOwner = {
     index: -1,
@@ -17,29 +17,33 @@ const defaultOwner = {
     color: "gray"
 }
 
-$(() => {
-    let roomId;
-    let socket;
-    $("#connect").click(() => {
-        roomId = $("#search-bar").val()
-    })
-    let url = "https://" + document.domain + ':' + location.port
-    socket = io.connect(url)
-    console.log(items)
-})
 
 SendData = () => {
-    socket.emit("update values", items)
+    params = JSON.parse(thisOwner)
+    fetch('/user/update/1234', {
+        method: "POST",
+        body: params,
+        redirect: "follow"
+    })
+    //post request here
 }
 
 let first = true;
-RetrieveData = () => {
-    socket.on("update values", (items) => {items = items})
+function RetrieveData() {
+    print("fetch start")
+    let response = fetch('https://127.0.0.1:5000/fetch/1234');
+    var data = response.json();
+    items = data
+    print(items)
     $("#display-purchased-items").empty()
     items.forEach(item => {
         CreateItem(item)
     })
+    setTimeout(RetrieveData, 4000);
 }
+
+RetrieveData()
+
 
 CreateItems = ({ index, name, price, quantity, owner }) => {
     $("#display-purchased-items").append(`
@@ -57,6 +61,7 @@ UpdateItem = (index) => {
     else if (item.owner == thisOwner) item.owner = defaultOwner
     SendData()
 }
+
 
 {/* <div className="item">
     

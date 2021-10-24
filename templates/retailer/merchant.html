@@ -5,32 +5,39 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.0.2/tailwind.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cash/8.1.0/cash.min.js"></script>
-    <script src="https://cdn.socket.io/socket.io-3.0.0.js"></script>
-    <script src="merchant.js"></script>
+    <script src="/retailer/merchant.js"></script>
+    <link rel="stylesheet" href="/retailer/style.css">
     <title>Document</title>
 </head>
+
 <body class="mx-10 my-10 text-xl">
     <h1 class="text-4xl font-bold my-8">Checkout</h1>
-    <div class="top-bar my-5">
-        <input class="w-3/12 m-2 p-3 rounded shadow-md italic" type="text" name="new-item-name" id="new-item-name"  value="Placeholder">
-        <input class="w-1/12 m-2 p-3 rounded shadow-md " type="number" name="new-item-q" id="new-item-q"  max="99" min="1" value="1">
-        <input class="w-1/12 m-2 p-3 rounded shadow-md " type="number" name="new-item-price" id="new-item-price"  max="10000.0" min="0.0" step = "0.01" value="10.00">
-        <button class="transition-all hover:shadow-md font-bold text-white rounded bg-green-600 hover:bg-green-800 py-2 px-4 add">
+    <div class="top-bar p-3 rounded-lg w-2/3">
+        <input disabled class="bg-white w-5/12 px-3 italic rounded" type="text" value="Item">
+        <input disabled class="bg-white w-2/12 px-3 pl-9 italic rounded "  max="99" min="1" value="Quantity">
+        <input disabled class="bg-white w-2/12 px-3 pl-11 italic rounded " value="Price">
+    </div>
+    <div class="top-bar mb-5 mt-0 p-3 rounded-lg bg-gray-100 w-2/3">
+        <input class="w-5/12 m-2 p-3 rounded shadow-md italic" type="text" name="new-item-name" id="new-item-name"  value="Placeholder">
+        <input class="w-2/12 m-2 p-3 rounded shadow-md " type="number" name="new-item-q" id="new-item-q"  max="99" min="1" value="1">
+        <input class="w-2/12 m-2 p-3 rounded shadow-md " type="number" name="new-item-price" id="new-item-price"  max="10000.0" min="0.0" step = "0.01" value="10.00">
+        <button class="w-2/12 transition-all hover:shadow-md font-bold text-white rounded bg-green-600 hover:bg-green-800 p-3 add">
             Add item
         </button>
     </div>
-    <div class="item-list">
-        <!-- <div class="item-1">
-            <input type="text" name="item-name" id="item-name"  value="Placeholder">
-            <input type="number" name="item-q" id="item-q"  max="99" min="1" value="1">
-            <input type="number" name="item-price" id="item-price"  max="10000.0" min="0.0" step = "0.01" value="10.00">
-            <button class="remove-1">
-                Add item
-            </button>
-        </div> -->
+    <div>
     </div>
+    <div class="item-list">
+    </div>
+    <span>
+        <div class="total-price"></div>
+        <br>
+
+        <button class="pay transition-all hover:shadow-md text-white w-1/12 font-bold rounded bg-blue-500 hover:bg-blue-900 p-3">
+        Pay
+        </button>
+    </span>
     <form hidden action="/start-transaction" method="POST" id="form">
         <input disabled type="text" name="data" id="data" value>
         <input type="submit">
